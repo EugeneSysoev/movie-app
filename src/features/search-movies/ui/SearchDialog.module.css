@@ -1,0 +1,34 @@
+.dialog {
+  position: fixed;
+  inset: 0 0 auto;
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  min-height: min(548px, 100vh);
+  max-height: 100vh;
+  overflow-y: auto;
+  padding: 50px 0 30px;
+  border: 0;
+  background: var(--color-bg-modal);
+  color: var(--color-text);
+}
+
+.dialog::backdrop {
+  background: rgb(0 0 0 / 75%);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 539px 1fr;
+  align-items: center;
+  min-height: 55px;
+}
+
+.login {
+  justify-self: end;
+}
+
+.login:disabled {
+  opacity: 1;
+  cursor: not-allowed;
+}

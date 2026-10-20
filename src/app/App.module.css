@@ -1,0 +1,14 @@
+.background {
+  background-image: url(../app/assets/background.webp);
+}
+.movieList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 335px);
+  gap: 20px;
+  margin-top: 24px;
+  list-style: none;
+}
+
+.movieList > li {
+  min-width: 0;
+}

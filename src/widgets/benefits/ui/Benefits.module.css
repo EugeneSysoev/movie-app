@@ -1,0 +1,46 @@
+.benefits {
+  margin-top: 28px;
+  margin-bottom: 98px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 36px;
+}
+
+.icon {
+  display: block;
+  width: 117px;
+  height: 117px;
+  object-fit: contain;
+  margin-left: -20px;
+  margin-bottom: 16px;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  max-width: 1400px;
+  list-style: none;
+}
+
+.itemTitle {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.description {
+  margin-top: 16px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
+  opacity: 0.5;
+  white-space: pre-line;
+}
+
+.item:last-child .description {
+  width: 335px;
+}

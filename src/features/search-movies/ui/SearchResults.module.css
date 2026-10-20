@@ -1,0 +1,67 @@
+.wrap {
+  width: min(922px, 79.5%);
+  margin-top: 30px;
+  margin-left: 20.5%;
+}
+
+.wrap + .wrap {
+  margin-top: 40px;
+}
+
+.title {
+  margin-bottom: 25px;
+  font-size: 32px;
+  line-height: normal;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px 20px;
+  list-style: none;
+}
+
+.list > li {
+  min-width: 0;
+}
+
+.peopleTitle {
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+.peopleList {
+  row-gap: 10px;
+}
+
+.movie {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.poster {
+  flex-shrink: 0;
+  width: 154px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.placeholder {
+  display: grid;
+  place-items: center;
+  background: var(--color-bg);
+  font-size: 12px;
+}
+
+.movieTitle {
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  opacity: 0.8;
+}
