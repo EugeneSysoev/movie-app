@@ -1,3 +1,2 @@
-export { useGetPopularMoviesQuery } from './api/movieApi'
 export { MovieCard } from './ui/MovieCard'
-export type { Movie } from './model/types'
+export { MOVIE_MESSAGES } from './config/messages'

@@ -1,0 +1,38 @@
+.slider {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--catalog-arrow-size);
+  column-gap: var(--catalog-arrow-gap);
+  align-items: start;
+  min-width: 0;
+}
+
+.slides {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  min-width: 0;
+}
+
+.slide {
+  height: auto;
+}
+
+.nextButton {
+  grid-column: 2;
+  grid-row: 1;
+  width: var(--catalog-arrow-size);
+  height: var(--catalog-arrow-size);
+  margin-top: 90px;
+}
+
+.nextButton img {
+  display: block;
+  width: 37px;
+  height: 23px;
+  transform: rotate(180deg);
+}
+
+.nextButton:hover,
+.nextButton:focus-visible {
+  filter: brightness(1.5);
+}

@@ -1,22 +1,7 @@
 import { Container } from '@/shared/ui/container'
 import { Logo } from '@/shared/ui/logo'
-import facebookIcon from '../assets/fb.svg'
-import instagramIcon from '../assets/ig.svg'
-import mailIcon from '../assets/mail.svg'
-import phoneIcon from '../assets/phone.svg'
-import vkIcon from '../assets/vk.svg'
+import { contacts, socials } from '../config/footer'
 import styles from './Footer.module.css'
-
-const contacts = [
-  { icon: phoneIcon, label: '8 800 800 80 80' },
-  { icon: mailIcon, label: 'support@mail.ru' },
-]
-
-const socials = [
-  { icon: facebookIcon, label: 'Facebook' },
-  { icon: vkIcon, label: 'ВКонтакте' },
-  { icon: instagramIcon, label: 'Instagram' },
-]
 
 interface FooterGroupProps {
   title: string
