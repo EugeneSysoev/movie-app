@@ -18,6 +18,7 @@
 
     /* Linting */
     "noUnusedLocals": true,
+    "strict": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
@@ -26,5 +27,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "src/**/*.css"]
+  "include": ["src", "src/**/*.css", "orval.config.ts"]
 }

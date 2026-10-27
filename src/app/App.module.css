@@ -1,5 +1,6 @@
 .background {
   background-image: url(../app/assets/background.webp);
+  background-size: cover;
 }
 .movieList {
   display: grid;

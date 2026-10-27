@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { TMDB_IMAGE_URLS } from '@/shared/config'
+import { MOVIE_MESSAGES } from '../config/messages'
 import styles from './MovieCard.module.css'
 
 interface MovieCardProps {
@@ -10,12 +13,18 @@ interface MovieCardProps {
 
 export function MovieCard(props: MovieCardProps) {
   const { title, imagePath, rating, genres = [], media } = props
+  const [failedImagePath, setFailedImagePath] = useState<string | null>(null)
 
-  const backdropUrl = imagePath
-    ? `https://image.tmdb.org/t/p/w780${imagePath}`
-    : null
+  const backdropUrl =
+    imagePath && imagePath !== failedImagePath
+      ? `${TMDB_IMAGE_URLS.w780}${imagePath}`
+      : null
 
   const currentMedia = media === 'movie' ? 'Фильм' : 'Сериал'
+  const visibleGenres = genres.slice(0, 2).map((genre, index) => {
+    const name = genre.toLowerCase()
+    return index === 0 ? name.charAt(0).toUpperCase() + name.slice(1) : name
+  })
 
   return (
     <article className={styles.card}>
@@ -25,10 +34,11 @@ export function MovieCard(props: MovieCardProps) {
           className={styles.poster}
           alt=""
           loading="lazy"
+          onError={() => setFailedImagePath(imagePath)}
         />
       ) : (
         <div className={`${styles.poster} ${styles.placeholder}`}>
-          Нет изображения
+          {MOVIE_MESSAGES.noImage}
         </div>
       )}
 
@@ -46,14 +56,16 @@ export function MovieCard(props: MovieCardProps) {
             </>
           )}
           <span>{currentMedia}</span>
-          {genres.length > 0 && (
+          {visibleGenres.length > 0 && (
             <>
               <span aria-hidden="true"> • </span>
-              <span>{genres.join(', ')}</span>
+              <span>{visibleGenres.join(', ')}</span>
             </>
           )}
         </p>
-        <p className={styles.title}>{title}</p>
+        <p className={styles.title} title={title}>
+          {title}
+        </p>
       </div>
     </article>
   )

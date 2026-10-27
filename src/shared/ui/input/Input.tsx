@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef } from 'react'
+import type { ComponentPropsWithRef } from 'react'
 import styles from './Input.module.css'
 
-type InputProps = ComponentPropsWithoutRef<'input'>
+type InputProps = ComponentPropsWithRef<'input'>
 
 export function Input(props: InputProps) {
   const { className = '', type = 'text', ...rest } = props

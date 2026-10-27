@@ -1,0 +1,55 @@
+.card {
+  width: 201px;
+  transition: width 0.4s ease;
+}
+
+:global(.swiper-slide-next) .card {
+  width: 277px;
+}
+
+:global(.swiper-slide-active) .card {
+  width: 378px;
+}
+
+.slideTitle {
+  position: relative;
+  margin-top: 5px;
+  font-size: 10px;
+  line-height: 1.4;
+  transition:
+    font-size 0.4s ease,
+    margin-top 0.4s ease;
+}
+
+:global(.swiper-slide-next) .slideTitle {
+  margin-top: 7px;
+  font-size: 13px;
+}
+
+:global(.swiper-slide-active) .slideTitle {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.releaseInfo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 6px;
+  color: var(--color-accent);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.premiereLabel {
+  padding: 2px 8px;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .slideTitle {
+    transition: none;
+  }
+}
