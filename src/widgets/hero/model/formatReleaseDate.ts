@@ -1,21 +1,12 @@
-const FALLBACK_DATE_TEXT = 'Дата уточняется'
-
-const releaseDateFormatter = new Intl.DateTimeFormat('ru-RU', {
-  day: 'numeric',
-  month: 'long',
-  timeZone: 'UTC',
-})
+import { parseISO, format } from 'date-fns'
+import { ru } from 'date-fns/locale'
 
 export function formatReleaseDate(dateString?: string): string {
-  if (!dateString?.trim()) {
-    return FALLBACK_DATE_TEXT
+  if (!dateString) {
+    return 'Дата уточняется'
   }
 
-  const date = new Date(dateString)
+  const date = parseISO(dateString)
 
-  if (Number.isNaN(date.getTime())) {
-    return FALLBACK_DATE_TEXT
-  }
-
-  return releaseDateFormatter.format(date)
+  return format(date, 'd MMMM', { locale: ru })
 }

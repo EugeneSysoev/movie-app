@@ -11,26 +11,19 @@ export type HeroSlide = {
 export function getHeroSlides(
   movies: MovieUpcomingList200ResultsItem[] = [],
 ): HeroSlide[] {
-  const slides: HeroSlide[] = []
+  return movies
+    .slice(0, 3)
+    .map((movie) => {
+      const { id, title, poster_path } = movie
 
-  for (const movie of movies) {
-    if (
-      typeof movie.id !== 'number' ||
-      !movie.title?.trim() ||
-      !movie.poster_path?.startsWith('/')
-    ) {
-      continue
-    }
+      if (id === undefined || title === undefined || !poster_path) return null
 
-    slides.push({
-      id: movie.id,
-      title: movie.title.trim(),
-      image: `${TMDB_IMAGE_URLS.w500}${movie.poster_path}`,
-      releaseDate: movie.release_date,
+      return {
+        id,
+        title,
+        image: `${TMDB_IMAGE_URLS.w500}${poster_path}`,
+        releaseDate: movie.release_date,
+      }
     })
-
-    if (slides.length === 3) break
-  }
-
-  return slides
+    .filter((slide) => slide !== null)
 }

@@ -10,7 +10,7 @@ export default defineConfig({
       httpClient: 'axios',
       target: './src/shared/api/generated/endpoints.ts',
       schemas: './src/shared/api/generated/model',
-      formatter: 'prettier',
+      formatter: 'oxfmt',
       override: {
         mutator: {
           path: './src/shared/api/tmdbRequest.ts',

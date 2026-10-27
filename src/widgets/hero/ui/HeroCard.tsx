@@ -11,7 +11,7 @@ interface HeroCardProps {
 export function HeroCard({ slide, priority }: HeroCardProps) {
   return (
     <div className={styles.card}>
-      <HeroPoster key={slide.image} src={slide.image} priority={priority} />
+      <HeroPoster src={slide.image} priority={priority} />
 
       <p className={styles.slideTitle}>{slide.title}</p>
 

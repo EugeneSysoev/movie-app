@@ -4,8 +4,10 @@ import type { GenreMovieList200GenresItem } from '@/shared/api/generated/model/g
 import { CATALOG_DISCOVER_PARAMS } from '../config/catalog'
 import { getCatalogMovies } from '../model/movies'
 import { CatalogFeedback } from './CatalogFeedback'
-import { MovieSlider } from './MovieSlider'
+import { Slider } from '@/shared/ui/slider'
+import { getCatalogA11yConfig } from '../config/catalog'
 import styles from './MovieGenreRow.module.css'
+import sliderStyles from './MovieSlider.module.css'
 
 interface MovieGenreRowProps {
   genreId: number
@@ -44,7 +46,17 @@ export function MovieGenreRow({ genreId, title, genres }: MovieGenreRowProps) {
       )}
 
       {movies.length > 0 && (
-        <MovieSlider label={title}>
+        <Slider
+          a11yConfig={getCatalogA11yConfig(title)}
+          slidesPerView={4}
+          spaceBetween={20}
+          classNames={{
+            slider: sliderStyles.slider,
+            slides: sliderStyles.slides,
+            slide: sliderStyles.slide,
+            nextButton: sliderStyles.nextButton,
+          }}
+        >
           {movies.map((movie) => (
             <MovieCard
               key={movie.id}
@@ -55,7 +67,7 @@ export function MovieGenreRow({ genreId, title, genres }: MovieGenreRowProps) {
               genres={movie.genres}
             />
           ))}
-        </MovieSlider>
+        </Slider>
       )}
     </section>
   )

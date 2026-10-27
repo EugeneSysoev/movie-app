@@ -797,7 +797,8 @@ export type AccountAddToWatchlistMutationResult = NonNullable<
   Awaited<ReturnType<typeof accountAddToWatchlist>>
 >;
 export type AccountAddToWatchlistMutationBody =
-  AccountAddToWatchlistBody | undefined;
+  | AccountAddToWatchlistBody
+  | undefined;
 export type AccountAddToWatchlistMutationError = unknown;
 export type AccountAddToWatchlistMutationVariables = {
   accountId: number;
@@ -2660,7 +2661,8 @@ export type AuthenticationCreateSessionMutationResult = NonNullable<
   Awaited<ReturnType<typeof authenticationCreateSession>>
 >;
 export type AuthenticationCreateSessionMutationBody =
-  AuthenticationCreateSessionBody | undefined;
+  | AuthenticationCreateSessionBody
+  | undefined;
 export type AuthenticationCreateSessionMutationError = unknown;
 export type AuthenticationCreateSessionMutationVariables = {
   data?: AuthenticationCreateSessionBody;
@@ -2760,7 +2762,8 @@ export type AuthenticationCreateSessionFromV4TokenMutationResult = NonNullable<
   Awaited<ReturnType<typeof authenticationCreateSessionFromV4Token>>
 >;
 export type AuthenticationCreateSessionFromV4TokenMutationBody =
-  AuthenticationCreateSessionFromV4TokenBody | undefined;
+  | AuthenticationCreateSessionFromV4TokenBody
+  | undefined;
 export type AuthenticationCreateSessionFromV4TokenMutationError = unknown;
 export type AuthenticationCreateSessionFromV4TokenMutationVariables = {
   data?: AuthenticationCreateSessionFromV4TokenBody;
@@ -2861,7 +2864,8 @@ export type AuthenticationCreateSessionFromLoginMutationResult = NonNullable<
   Awaited<ReturnType<typeof authenticationCreateSessionFromLogin>>
 >;
 export type AuthenticationCreateSessionFromLoginMutationBody =
-  AuthenticationCreateSessionFromLoginBody | undefined;
+  | AuthenticationCreateSessionFromLoginBody
+  | undefined;
 export type AuthenticationCreateSessionFromLoginMutationError = unknown;
 export type AuthenticationCreateSessionFromLoginMutationVariables = {
   data?: AuthenticationCreateSessionFromLoginBody;
@@ -2961,7 +2965,8 @@ export type AuthenticationDeleteSessionMutationResult = NonNullable<
   Awaited<ReturnType<typeof authenticationDeleteSession>>
 >;
 export type AuthenticationDeleteSessionMutationBody =
-  AuthenticationDeleteSessionBody | undefined;
+  | AuthenticationDeleteSessionBody
+  | undefined;
 export type AuthenticationDeleteSessionMutationError = unknown;
 export type AuthenticationDeleteSessionMutationVariables = {
   data?: AuthenticationDeleteSessionBody;
