@@ -1,0 +1,41 @@
+.about {
+  padding-top: 87px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 613px) minmax(0, 458px);
+  column-gap: 174px;
+  row-gap: 60px;
+  align-items: start;
+}
+
+.title {
+  grid-column: 1;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 39px;
+}
+
+.description {
+  grid-column: 1;
+  grid-row: 2;
+  font-size: 16px;
+  line-height: 1.4;
+  opacity: 0.5;
+  white-space: pre-line;
+}
+
+.credits {
+  grid-column: 2;
+  grid-row: 2;
+  display: grid;
+  gap: 20px;
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}

@@ -1,0 +1,42 @@
+.dialog {
+  margin: auto;
+  max-width: 960px;
+  width: calc(100% - 32px);
+  max-height: calc(100vh - 32px);
+  padding: 24px;
+  background-color: var(--color-bg-modal);
+  color: var(--color-text);
+  overflow-y: auto;
+  box-sizing: border-box;
+  border: 0;
+}
+
+.dialog::backdrop {
+  background: rgb(0 0 0 / 75%);
+}
+
+.content {
+  display: grid;
+  gap: 16px;
+}
+
+.player {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+}
+
+.button {
+  justify-self: end;
+}
+
+.youtubeLink {
+  justify-self: start;
+  color: inherit;
+  text-underline-offset: 4px;
+}
+
+.youtubeLink:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}

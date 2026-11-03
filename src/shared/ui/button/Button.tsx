@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef } from 'react'
+import type { ComponentPropsWithRef } from 'react'
 import styles from './Button.module.css'
 
-interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
+interface ButtonProps extends ComponentPropsWithRef<'button'> {
   variant?: 'primary' | 'outline'
 }
 
