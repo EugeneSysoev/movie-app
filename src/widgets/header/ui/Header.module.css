@@ -1,3 +1,8 @@
+.header {
+  position: relative;
+  z-index: 2;
+}
+
 .title,
 .icon {
   color: var(--color-text);
@@ -21,7 +26,7 @@
   justify-content: space-between;
   border-bottom: 0.5px solid
     color-mix(in srgb, var(--color-text) 30%, transparent);
-  min-height: 114px;
+  min-height: var(--header-height);
 }
 
 .wrap {

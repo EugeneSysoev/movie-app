@@ -31,10 +31,12 @@
 }
 
 :root {
+  --header-height: 114px;
   --color-bg: #141025;
   --color-bg-modal: #000000;
   --color-text: #ffffff;
   --color-accent: #ed0a32;
+  --color-gradient: #1c267f;
 }
 
 #root {

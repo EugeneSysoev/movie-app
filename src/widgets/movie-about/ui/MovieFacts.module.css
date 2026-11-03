@@ -1,0 +1,30 @@
+.facts {
+  display: grid;
+  gap: 20px;
+  max-width: 458px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 182px minmax(0, 1fr);
+  gap: 20px;
+}
+
+.label {
+  opacity: 0.25;
+}
+
+.value,
+.rating {
+  overflow-wrap: anywhere;
+}
+
+.value {
+  opacity: 0.75;
+}
+
+.rating {
+  color: var(--color-accent);
+}

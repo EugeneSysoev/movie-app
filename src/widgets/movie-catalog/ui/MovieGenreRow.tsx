@@ -8,6 +8,7 @@ import { Slider } from '@/shared/ui/slider'
 import { getCatalogA11yConfig } from '../config/catalog'
 import styles from './MovieGenreRow.module.css'
 import sliderStyles from './MovieSlider.module.css'
+import { Link } from 'react-router'
 
 interface MovieGenreRowProps {
   genreId: number
@@ -58,14 +59,20 @@ export function MovieGenreRow({ genreId, title, genres }: MovieGenreRowProps) {
           }}
         >
           {movies.map((movie) => (
-            <MovieCard
+            <Link
+              className={styles.movieLink}
               key={movie.id}
-              title={movie.title}
-              imagePath={movie.imagePath}
-              media="movie"
-              rating={movie.rating}
-              genres={movie.genres}
-            />
+              to={`/movies/${movie.id}`}
+              aria-label={movie.title}
+            >
+              <MovieCard
+                title={movie.title}
+                imagePath={movie.imagePath}
+                media="movie"
+                rating={movie.rating}
+                genres={movie.genres}
+              />
+            </Link>
           ))}
         </Slider>
       )}
