@@ -15,29 +15,53 @@
   list-style: none;
 }
 
-.slide {
+.carousel {
+  position: relative;
+}
+
+.slider .placeholder {
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: min(100%, 378px);
+  min-height: 550px;
+  margin: 0;
+  padding: 24px;
+  border: 1px solid rgb(255 255 255 / 15%);
+  border-radius: 10px;
+  background-color: var(--color-bg);
+  text-align: center;
+}
+
+.slides .slide {
   position: absolute;
-  top: 147px;
-  left: 595px;
-  z-index: 1;
-  height: auto;
-  filter: blur(3px);
-  transition:
-    left 0.4s ease,
-    top 0.4s ease,
-    filter 0.4s ease;
-}
-
-.slide:global(.swiper-slide-next) {
-  top: 83px;
-  left: 350px;
-  z-index: 2;
-}
-
-.slide:global(.swiper-slide-active) {
   top: 0;
   left: 0;
+  z-index: 1;
+  height: auto;
+  transform-origin: top left;
+  translate: 595px 147px;
+  scale: 0.532;
+  filter: blur(3px);
+  transition:
+    translate 400ms ease,
+    scale 400ms ease,
+    filter 250ms ease;
+}
+
+.slides:not(:has(:global(.swiper-slide-active))) .slide:nth-child(2),
+.slide:global(.swiper-slide-next),
+.slide:first-child:has(~ :global(.swiper-slide-active):last-child) {
+  z-index: 2;
+  translate: 350px 83px;
+  scale: 0.733;
+}
+
+.slides:not(:has(:global(.swiper-slide-active))) .slide:first-child,
+.slide:global(.swiper-slide-active) {
   z-index: 3;
+  translate: 0 0;
+  scale: 1;
   filter: blur(0);
 }
 
@@ -65,7 +89,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .slide,
+  .slides .slide,
   .nextButton {
     transition: none;
   }

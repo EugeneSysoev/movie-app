@@ -1,3 +1,4 @@
+import { getMovieRating } from '@/entities/movie'
 import type { DiscoverMovie200ResultsItem } from '@/shared/api/generated/model/discoverMovie200ResultsItem'
 import type { GenreMovieList200GenresItem } from '@/shared/api/generated/model/genreMovieList200GenresItem'
 
@@ -39,7 +40,10 @@ export function getCatalogMovies(
       id,
       title,
       imagePath: movie.backdrop_path ?? null,
-      rating: movie.vote_count !== 0 ? movie.vote_average : undefined,
+      rating: getMovieRating({
+        voteAverage: movie?.vote_average,
+        voteCount: movie?.vote_count,
+      }),
       genres: getGenreNames(movie.genre_ids ?? [], genres),
     }
   })

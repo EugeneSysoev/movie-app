@@ -1,7 +1,7 @@
-import selectionIcon from '../assets/1 icon.png'
-import recommendationsIcon from '../assets/2 icon.png'
-import worldCinemaIcon from '../assets/3 icon.png'
-import freeMonthIcon from '../assets/4 icon.png'
+import selectionIcon from '../assets/1 icon.webp'
+import recommendationsIcon from '../assets/2 icon.webp'
+import worldCinemaIcon from '../assets/3 icon.webp'
+import freeMonthIcon from '../assets/4 icon.webp'
 
 export const benefits = [
   {

@@ -1,0 +1,32 @@
+.dialog::backdrop {
+  background: rgb(0 0 0 / 75%);
+}
+
+.dialog .closeButton {
+  position: absolute;
+  top: var(--dialog-close-top, 0);
+  right: var(--dialog-close-right, 0);
+  width: 32px;
+  height: 32px;
+  opacity: 0.5;
+  transition: opacity 160ms ease;
+}
+
+.dialog .closeButton:hover,
+.dialog .closeButton:focus-visible {
+  opacity: 1;
+}
+
+.closeIcon {
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-color: currentColor;
+  mask: url('@/shared/assets/icons/close.svg') center / contain no-repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog .closeButton {
+    transition: none;
+  }
+}

@@ -1,7 +1,6 @@
-import { useState } from 'react'
-import { TMDB_IMAGE_URLS } from '@/shared/config'
-import { MOVIE_MESSAGES } from '../config/messages'
 import styles from './MovieCard.module.css'
+
+import { MovieImage } from './MovieImage'
 
 interface MovieCardProps {
   title: string
@@ -9,16 +8,11 @@ interface MovieCardProps {
   media: 'movie' | 'tv'
   rating?: number
   genres?: string[]
+  canLoad?: boolean
 }
 
 export function MovieCard(props: MovieCardProps) {
-  const { title, imagePath, rating, genres = [], media } = props
-  const [failedImagePath, setFailedImagePath] = useState<string | null>(null)
-
-  const backdropUrl =
-    imagePath && imagePath !== failedImagePath
-      ? `${TMDB_IMAGE_URLS.w780}${imagePath}`
-      : null
+  const { title, imagePath, rating, genres = [], media, canLoad = true } = props
 
   const currentMedia = media === 'movie' ? 'Фильм' : 'Сериал'
   const visibleGenres = genres.slice(0, 2).map((genre, index) => {
@@ -28,19 +22,13 @@ export function MovieCard(props: MovieCardProps) {
 
   return (
     <article className={styles.card}>
-      {backdropUrl ? (
-        <img
-          src={backdropUrl}
-          className={styles.poster}
-          alt=""
-          loading="lazy"
-          onError={() => setFailedImagePath(imagePath)}
-        />
-      ) : (
-        <div className={`${styles.poster} ${styles.placeholder}`}>
-          {MOVIE_MESSAGES.noImage}
-        </div>
-      )}
+      <MovieImage
+        imagePath={imagePath}
+        size="w780"
+        className={styles.poster}
+        loading="lazy"
+        canLoad={canLoad}
+      />
 
       <div className={styles.content}>
         <p className={styles.metadata}>

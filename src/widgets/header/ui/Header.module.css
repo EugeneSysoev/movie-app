@@ -1,3 +1,8 @@
+.header {
+  position: relative;
+  z-index: 2;
+}
+
 .title,
 .icon {
   color: var(--color-text);
@@ -11,7 +16,7 @@
   text-decoration: none;
 }
 
-.title:hover {
+.title:not(:disabled):hover {
   opacity: 1;
 }
 
@@ -19,9 +24,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 0.5px solid
+  box-shadow: inset 0 -0.5px
     color-mix(in srgb, var(--color-text) 30%, transparent);
-  min-height: 114px;
+  min-height: var(--header-height);
+}
+
+.row--movie {
+  box-shadow: none;
 }
 
 .wrap {

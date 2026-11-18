@@ -7,19 +7,18 @@ import closeIcon from '@/shared/assets/icons/close.svg'
 interface SearchFormProps {
   query: string
   onQueryChange: (value: string) => void
+  onClose: () => void
   inputRef: React.RefObject<HTMLInputElement | null>
 }
 
-export function SearchForm({
-  query,
-  onQueryChange,
-  inputRef,
-}: SearchFormProps) {
+export function SearchForm(props: SearchFormProps) {
+  const { query, onQueryChange, inputRef, onClose } = props
+
   return (
-    <form className={styles.form} onSubmit={(event) => event.preventDefault()}>
+    <form className={styles.form} role="search" onSubmit={(event) => event.preventDefault()}>
       <div className={styles.controls}>
         <label className={styles.visuallyHidden} htmlFor="movie-search">
-          Поиск фильма
+          Название фильма или имя актёра, режиссёра
         </label>
 
         <img src={searchField} alt="" />
@@ -29,17 +28,25 @@ export function SearchForm({
           id="movie-search"
           type="text"
           ref={inputRef}
+          autoComplete="off"
           value={query}
           onChange={(event) => onQueryChange(event.target.value)}
-          placeholder="Название фильма , сериала, или имя актёра, режиссёра"
+          placeholder="Название фильма или имя актёра, режиссёра"
         />
 
         <IconButton
           type="button"
-          aria-label="Очистить поиск"
-          onClick={() => onQueryChange('')}
+          aria-label={query ? 'Очистить поиск' : 'Закрыть поиск'}
+          onClick={() => {
+            if (!query) {
+              onClose()
+              return
+            }
+            onQueryChange('')
+            inputRef.current?.focus()
+          }}
         >
-          <img src={closeIcon} alt="" />
+          <img className={styles.closeIcon} src={closeIcon} alt="" />
         </IconButton>
       </div>
     </form>

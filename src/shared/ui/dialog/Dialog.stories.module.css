@@ -1,0 +1,16 @@
+.dialog {
+  --dialog-close-top: 12px;
+  --dialog-close-right: 12px;
+  width: min(480px, calc(100vw - 32px));
+  margin: auto;
+  padding: 48px 32px 32px;
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 16px;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.dialog[open] {
+  display: grid;
+  gap: 24px;
+}

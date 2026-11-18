@@ -1,0 +1,34 @@
+.dialog {
+  position: fixed;
+  margin: auto;
+  max-width: 1056px;
+  width: calc(100% - 32px);
+  max-height: calc(100dvh - 32px);
+  padding: 48px;
+  background-color: transparent;
+  color: var(--color-text);
+  overflow: visible;
+  box-sizing: border-box;
+  border: 0;
+}
+
+.content {
+  display: grid;
+  gap: 16px;
+  max-height: calc(100dvh - 128px);
+  padding: 24px;
+  background-color: var(--color-bg-modal);
+  overflow-y: auto;
+}
+
+.player {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+}
+
+.loading {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+

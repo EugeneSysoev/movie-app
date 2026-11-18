@@ -3,17 +3,9 @@
 }
 
 .poster {
-  display: block;
   width: 100%;
   aspect-ratio: 335 / 225;
-  object-fit: cover;
   border-radius: 10px;
-}
-
-.placeholder {
-  display: grid;
-  place-items: center;
-  font-size: 14px;
 }
 
 .content {

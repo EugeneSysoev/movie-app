@@ -1,52 +1,43 @@
-import { useGenreMovieList } from '@/shared/api/generated/endpoints'
+import { useEffect, useRef } from 'react'
+import { useLocation } from 'react-router'
 import { Button } from '@/shared/ui/button'
-import { CATALOG_GENRE_PARAMS, CATALOG_ROWS } from '../config/catalog'
-import { CatalogFeedback } from './CatalogFeedback'
-import { MovieGenreRow } from './MovieGenreRow'
+import { Loader } from '@/shared/ui/loader'
+import { MovieGenreRow, type MovieGenreRowProps } from './MovieGenreRow'
 import styles from './MovieCatalog.module.css'
 
-export function MovieCatalog() {
-  const { data, isPending, isError, isFetching, refetch } =
-    useGenreMovieList(CATALOG_GENRE_PARAMS)
+interface MovieCatalogProps {
+  rows: MovieGenreRowProps[]
+  isLoading: boolean
+}
 
-  const genres = data?.genres ?? []
+export function MovieCatalog({ rows, isLoading }: MovieCatalogProps) {
+  const location = useLocation()
+  const catalogRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const catalog = catalogRef.current
+    if (location.hash === '#movies' && catalog) {
+      catalog.focus({ preventScroll: true })
+      catalog.scrollIntoView({ block: 'start' })
+    }
+  }, [location])
 
   return (
     <section
       id="movies"
+      ref={catalogRef}
+      tabIndex={-1}
       className={styles.catalog}
       aria-labelledby="catalog-title"
     >
       <h2 className={styles.title} id="catalog-title">
         Каталог фильмов и сериалов
       </h2>
-      {isError && (
-        <CatalogFeedback
-          message="Не удалось загрузить жанры."
-          onRetry={() => void refetch()}
-          isFetching={isFetching}
-        />
-      )}
-      {!isPending && !isError && genres.length === 0 && (
-        <CatalogFeedback
-          message="Список жанров пока недоступен."
-          onRetry={() => void refetch()}
-          isFetching={isFetching}
-        />
-      )}
-
-      {genres.length > 0 && (
-        <div className={styles.rows}>
-          {CATALOG_ROWS.map((row) => (
-            <MovieGenreRow
-              key={row.genreId}
-              genreId={row.genreId}
-              title={row.title}
-              genres={genres}
-            />
-          ))}
-        </div>
-      )}
+      <div className={styles.rows} aria-busy={isLoading}>
+        {isLoading ? <Loader label="Загрузка каталога" /> : rows.map((row) => (
+          <MovieGenreRow key={row.genreId} {...row} />
+        ))}
+      </div>
 
       <Button
         className={styles.showAll}

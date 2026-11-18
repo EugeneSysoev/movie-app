@@ -1,0 +1,44 @@
+.about {
+  padding-top: 87px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 690px) minmax(0, 458px);
+  column-gap: clamp(32px, 8vw, 97px);
+  row-gap: 60px;
+  align-items: start;
+}
+
+.title {
+  grid-column: 1 / -1;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 39px;
+}
+
+.mainColumn {
+  display: grid;
+  gap: 80px;
+  min-width: 0;
+}
+
+.description {
+  max-width: 613px;
+  overflow-wrap: anywhere;
+  font-size: 16px;
+  line-height: 1.4;
+  opacity: 0.5;
+  white-space: pre-line;
+}
+
+.credits {
+  display: grid;
+  gap: 20px;
+}
+
+@media (max-width: 800px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

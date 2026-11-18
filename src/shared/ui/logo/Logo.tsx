@@ -1,9 +1,10 @@
 import styles from './Logo.module.css'
+import { Link } from 'react-router'
 
-export function Logo() {
+export function Logo({ onClick }: { onClick?: () => void }) {
   return (
-    <a href="/" className={styles.logo}>
+    <Link to="/" className={styles.logo} onClick={onClick}>
       Кино<span className={styles.logoAccent}>Дом</span>
-    </a>
+    </Link>
   )
 }
