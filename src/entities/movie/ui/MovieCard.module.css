@@ -8,11 +8,6 @@
   border-radius: 10px;
 }
 
-img.poster {
-  display: block;
-  object-fit: cover;
-}
-
 .content {
   min-width: 0;
   margin-top: 10px;

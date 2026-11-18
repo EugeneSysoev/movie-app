@@ -13,15 +13,24 @@
   line-height: 19px;
   white-space: nowrap;
   color: var(--color-text);
+  transition: background-color 160ms ease;
 }
 
-.button[data-variant='primary'] {
+.button--primary {
   background-color: var(--color-accent);
 }
 
-.button[data-variant='outline'] {
+.button--outline {
   background-color: transparent;
   box-shadow: inset 0 0 0 1px var(--color-text);
+}
+
+.button--outline:not(:disabled):hover {
+  background-color: rgb(255 255 255 / 10%);
+}
+
+.button--outline:not(:disabled):active {
+  background-color: rgb(255 255 255 / 20%);
 }
 
 .button:disabled {
@@ -32,4 +41,10 @@
 .button:focus-visible {
   outline: 2px solid var(--color-text);
   outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
 }

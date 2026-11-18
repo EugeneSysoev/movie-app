@@ -9,14 +9,8 @@ interface MovieFactsProps {
   actors: string
 }
 
-export function MovieFacts({
-  rating,
-  genres,
-  countries,
-  duration,
-  directors,
-  actors,
-}: MovieFactsProps) {
+export function MovieFacts(props: MovieFactsProps) {
+  const { rating, genres, countries, duration, directors, actors } = props
   const rows = [
     {
       label: 'Рейтинг TMDB:',

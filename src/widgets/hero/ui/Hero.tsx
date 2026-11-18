@@ -1,9 +1,9 @@
 import { Button } from '@/shared/ui/button'
 import { Container } from '@/shared/ui/container'
-import { HeroSlider } from './HeroSlider'
+import type { ReactNode } from 'react'
 import styles from './Hero.module.css'
 
-export function Hero() {
+export function Hero({ children }: { children: ReactNode }) {
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
       <Container>
@@ -29,7 +29,7 @@ export function Hero() {
             </Button>
           </div>
 
-          <HeroSlider />
+          {children}
         </div>
       </Container>
     </section>

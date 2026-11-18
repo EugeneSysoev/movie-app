@@ -5,12 +5,19 @@ import type {
   MovieRecommendations200
 } from '@/shared/api/generated/model'
 
+export interface RecommendedMovie {
+  id: number
+  title: string
+  imagePath: string | null
+  rating?: number
+  genres: string[]
+}
+
 export function getRecommendedMovies(
   response: MovieRecommendations200 | undefined,
   genres: GenreMovieList200GenresItem[] = [],
   currentMovieId: number
-) {
-
+): RecommendedMovie[] {
   const movies = (response?.results ?? []) as DiscoverMovie200ResultsItem[]
 
   return movies.slice(0, 10).flatMap((movie) => {
@@ -18,7 +25,8 @@ export function getRecommendedMovies(
       movie.id === undefined ||
       movie.title === undefined ||
       movie.id === currentMovieId
-    ) return []
+    )
+      return []
 
     return {
       id: movie.id,

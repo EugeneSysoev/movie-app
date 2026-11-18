@@ -1,23 +1,24 @@
 .dialog {
+  position: fixed;
   margin: auto;
-  max-width: 960px;
+  max-width: 1056px;
   width: calc(100% - 32px);
-  max-height: calc(100vh - 32px);
-  padding: 24px;
-  background-color: var(--color-bg-modal);
+  max-height: calc(100dvh - 32px);
+  padding: 48px;
+  background-color: transparent;
   color: var(--color-text);
-  overflow-y: auto;
+  overflow: visible;
   box-sizing: border-box;
   border: 0;
-}
-
-.dialog::backdrop {
-  background: rgb(0 0 0 / 75%);
 }
 
 .content {
   display: grid;
   gap: 16px;
+  max-height: calc(100dvh - 128px);
+  padding: 24px;
+  background-color: var(--color-bg-modal);
+  overflow-y: auto;
 }
 
 .player {
@@ -26,17 +27,8 @@
   border: none;
 }
 
-.button {
-  justify-self: end;
+.loading {
+  width: 100%;
+  aspect-ratio: 16 / 9;
 }
 
-.youtubeLink {
-  justify-self: start;
-  color: inherit;
-  text-underline-offset: 4px;
-}
-
-.youtubeLink:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 3px;
-}

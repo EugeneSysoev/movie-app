@@ -5,34 +5,35 @@ import bellIcon from '@/shared/assets/icons/bell.svg'
 import authorizationIcon from '@/shared/assets/icons/authorization.svg'
 import { SearchDialog } from '@/features/search-movies'
 import { useRef, useState } from 'react'
+import { Link, useMatch } from 'react-router'
 import { Logo } from '@/shared/ui/logo'
 
 export function Header() {
+  const moviePage = useMatch('/movies/:movieId')
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const searchButtonRef = useRef<HTMLButtonElement>(null)
-
-  function handleCloseSearch() {
-    setIsSearchOpen(false)
-    searchButtonRef.current?.focus()
-  }
 
   return (
     <header className={styles.header}>
       <Container>
-        <div className={styles.row}>
+        <div className={moviePage ? `${styles.row} ${styles['row--movie']}` : styles.row}>
           <div className={styles.wrap}>
             <Logo />
             <nav aria-label="Основная навигация">
               <ul className={styles.nav}>
                 <li>
-                  <a className={styles.title} href="#movies">
+                  <Link className={styles.title} to="/#movies">
                     Фильмы
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className={styles.title} href="#series">
+                  <button
+                    className={`${styles.title} ${styles.buttonReset}`}
+                    type="button"
+                    disabled
+                  >
                     Сериалы
-                  </a>
+                  </button>
                 </li>
                 <li>
                   <button
@@ -83,7 +84,9 @@ export function Header() {
         </div>
       </Container>
 
-      {isSearchOpen && <SearchDialog onClose={handleCloseSearch} />}
+      {isSearchOpen && (
+        <SearchDialog returnFocusRef={searchButtonRef} onClose={() => setIsSearchOpen(false)} />
+      )}
     </header>
   )
 }

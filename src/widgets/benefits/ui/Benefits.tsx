@@ -1,13 +1,15 @@
 import { benefits } from '../config/benefits'
 import styles from './Benefits.module.css'
 
-type BenefitItemProps = {
+interface BenefitItemProps {
   icon: string
   title: string
   description: string
 }
 
-function BenefitItem({ icon, title, description }: BenefitItemProps) {
+function BenefitItem(props: BenefitItemProps) {
+  const { icon, title, description } = props
+
   return (
     <li className={styles.item}>
       <img className={styles.icon} src={icon} alt="" />

@@ -1,21 +1,31 @@
 import styles from './MovieReviews.module.css'
-import { parseAndSanitizeMarkdown } from '../model/getReviewHtml'
+import { getReviewHtml } from '../model/getReviewHtml'
 
 interface ReviewTextProps {
   content?: string
+  rating?: number
 }
 
-export const ReviewText: React.FC<ReviewTextProps> = ({ content }) => {
-  if (!content) {
-    return <p className={styles.text}>Отзыв отсутствует</p>
-  }
-
-  const cleanHtml = parseAndSanitizeMarkdown(content)
+export function ReviewText({ content, rating }: ReviewTextProps) {
+  const { title, html } = getReviewHtml(content)
+  const hasRating = rating !== undefined
 
   return (
-    <div
-      className={styles.text}
-      dangerouslySetInnerHTML={{ __html: cleanHtml }}
-    />
+    <>
+      {(hasRating || title) && (
+        <div className={styles.reviewSummary}>
+          {hasRating && (
+            <span className={styles.rating} title={`Оценка автора: ${rating} из 10`}>
+              <span className={styles.visuallyHidden}>Оценка автора: </span>
+              {rating}
+              <span className={styles.visuallyHidden}> из 10</span>
+            </span>
+          )}
+          {hasRating && title && <span aria-hidden="true">•</span>}
+          {title && <h3 className={styles.reviewTitle}>{title}</h3>}
+        </div>
+      )}
+      {html && <div className={styles.text} dangerouslySetInnerHTML={{ __html: html }} />}
+    </>
   )
 }

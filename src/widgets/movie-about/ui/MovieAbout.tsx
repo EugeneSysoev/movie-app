@@ -1,48 +1,37 @@
+import type { ReactNode } from 'react'
 import { Container } from '@/shared/ui/container'
-import { Button } from '@/shared/ui/button'
-import { useMovieCredits } from '@/shared/api/generated/endpoints'
-import { getMovieActors, getMovieDirectors } from '../model/movieCredits'
 import { MovieFacts } from './MovieFacts'
+import { Feedback } from '@/shared/ui/feedback'
 import styles from './MovieAbout.module.css'
 
 interface MovieAboutProps {
+  children: ReactNode
   overview: string
-  movieId: number
   rating?: number
   genres: string[]
   countries: string[]
   duration?: string
+  actors: string[]
+  directors: string[]
+  isError: boolean
+  isFetching: boolean
+  onRetry: () => void
 }
 
-export function MovieAbout({
-  overview,
-  movieId,
-  rating,
-  genres,
-  countries,
-  duration,
-}: MovieAboutProps) {
-  const { data, isPending, isError, refetch } = useMovieCredits(movieId, {
-    language: 'ru-RU',
-  })
-
-  let creditsMessage = ''
-  let creditsFeedback
-
-  if (isPending) {
-    creditsMessage = 'Загружаем…'
-    creditsFeedback = <p role="status">Загружаем состав фильма…</p>
-  } else if (isError) {
-    creditsMessage = 'Не удалось загрузить'
-    creditsFeedback = (
-      <div className={styles.error}>
-        <p role="alert">Не удалось загрузить состав фильма.</p>
-        <Button variant="outline" onClick={() => void refetch()}>
-          Повторить запрос
-        </Button>
-      </div>
-    )
-  }
+export function MovieAbout(props: MovieAboutProps) {
+  const {
+    children,
+    overview,
+    rating,
+    genres,
+    countries,
+    duration,
+    actors,
+    directors,
+    isError,
+    isFetching,
+    onRetry
+  } = props
 
   return (
     <section className={styles.about} aria-labelledby="movie-about-title">
@@ -50,25 +39,26 @@ export function MovieAbout({
         <h2 className={styles.title} id="movie-about-title">
           О фильме
         </h2>
-        <p className={styles.description}>{overview}</p>
-        <div className={styles.credits} aria-busy={isPending}>
+        <div className={styles.mainColumn}>
+          <p className={styles.description}>{overview}</p>
+          {children}
+        </div>
+        <div className={styles.credits} aria-busy={isFetching}>
           <MovieFacts
             rating={rating}
             genres={genres}
             countries={countries}
             duration={duration}
-            directors={
-              creditsMessage ||
-              getMovieDirectors(data?.crew).join(', ') ||
-              'Режиссёр не указан'
-            }
-            actors={
-              creditsMessage ||
-              getMovieActors(data?.cast).join(', ') ||
-              'Имена актёров на русском недоступны'
-            }
+            directors={directors.join(', ') || 'Режиссёр не указан'}
+            actors={actors.join(', ') || 'Имена актёров на русском недоступны'}
           />
-          {creditsFeedback}
+
+          {isError && (
+            <Feedback
+              isFetching={isFetching}
+              onRetry={onRetry}
+            />
+          )}
         </div>
       </Container>
     </section>

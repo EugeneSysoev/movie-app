@@ -1,54 +1,62 @@
-import { useMovieUpcomingList } from '@/shared/api/generated/endpoints'
-import { getHeroSlides } from '../model/slides'
-import { HERO_UPCOMING_PARAMS, SWIPER_A11Y_CONFIG } from '../config/constants'
 import { HeroCard } from './HeroCard'
-import { HeroFeedback } from './HeroFeedback'
+import { Feedback } from '@/shared/ui/feedback'
+import { Loader } from '@/shared/ui/loader'
 import { Slider } from '@/shared/ui/slider'
+import { memo } from 'react'
 import styles from './HeroSlider.module.css'
+import type { HeroSlide } from '../model/slides'
+import { SWIPER_A11Y_CONFIG } from '../config/constants'
 
-export function HeroSlider() {
-  const { data, isPending, isError, isFetching, refetch } =
-    useMovieUpcomingList(HERO_UPCOMING_PARAMS)
+interface HeroSliderProps {
+  slides: HeroSlide[]
+  isPending: boolean
+  isError: boolean
+  isFetching: boolean
+  onRetry: () => void
+}
 
-  const slides = getHeroSlides(data?.results)
-
-  const isEmpty = slides.length === 0
-
-  if (isEmpty) {
-    return (
-      <div className={styles.slider} aria-busy={isPending}>
-        <HeroFeedback
-          isPending={isPending}
-          isError={isError}
-          isFetching={isFetching}
-          onRetry={() => void refetch()}
-        />
-      </div>
-    )
-  }
-
+const PremiereCarousel = memo(function PremiereCarousel({ slides }: { slides: HeroSlide[] }) {
   return (
     <Slider
       slidesPerView={1}
       spaceBetween={0}
-      virtualTranslate={true}
+      virtualTranslate
+      rewind
       speed={0}
-      keyboardEnabled={true}
+      keyboardEnabled
       a11yConfig={SWIPER_A11Y_CONFIG}
       classNames={{
-        slider: styles.slider,
+        slider: styles.carousel,
         slides: styles.slides,
         slide: styles.slide,
-        nextButton: styles.nextButton,
+        nextButton: styles.nextButton
       }}
     >
-      {slides.map((slide) => (
-        <HeroCard
-          key={slide.id}
-          slide={slide}
-          priority={slide.id === slides[0]?.id}
-        />
+      {slides.map((slide, index) => (
+        <HeroCard key={slide.id} slide={slide} priority={index === 0} />
       ))}
     </Slider>
+  )
+})
+
+export function HeroSlider(props: HeroSliderProps) {
+  const { slides, isPending, isError, isFetching, onRetry } = props
+  const isEmpty = slides.length === 0
+  return (
+    <div className={styles.slider} aria-busy={isFetching}>
+      {isPending && <Loader className={styles.placeholder} label="Загрузка премьер" />}
+      {!isEmpty && <PremiereCarousel slides={slides} />}
+
+      {isError && (
+        <Feedback
+          className={isEmpty ? styles.placeholder : undefined}
+          isFetching={isFetching}
+          onRetry={onRetry}
+        />
+      )}
+      {isEmpty && !isPending && !isError && (
+        <Feedback className={styles.placeholder} message="Нет доступных премьер." />
+      )}
+    </div>
   )
 }

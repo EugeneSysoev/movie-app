@@ -2,6 +2,12 @@ const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/'
 
 export const TMDB_LANGUAGE = 'ru-RU'
 
+export const TMDB_LANGUAGE_EN = 'en-US'
+
+export const TMDB_LANGUAGE_PARAMS = {
+  language: TMDB_LANGUAGE
+}
+
 export const TMDB_IMAGE_URLS = {
   w45: `${TMDB_IMAGE_BASE_URL}w45`,
   w92: `${TMDB_IMAGE_BASE_URL}w92`,
@@ -13,5 +19,5 @@ export const TMDB_IMAGE_URLS = {
   w780: `${TMDB_IMAGE_BASE_URL}w780`,
   w1280: `${TMDB_IMAGE_BASE_URL}w1280`,
   h632: `${TMDB_IMAGE_BASE_URL}h632`,
-  original: `${TMDB_IMAGE_BASE_URL}original`,
+  original: `${TMDB_IMAGE_BASE_URL}original`
 }

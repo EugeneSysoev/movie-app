@@ -16,9 +16,8 @@ export function Button(props: ButtonProps) {
 
   return (
     <button
-      className={`${styles.button} ${className}`}
+      className={`${styles.button} ${styles[`button--${variant}`]} ${className}`}
       type={type}
-      data-variant={variant}
       {...rest}
     >
       {children}

@@ -1,4 +1,3 @@
-import { Button } from '@/shared/ui/button'
 import { useId, useRef, useState, type FormEvent } from 'react'
 import {
   MAX_COMMENT_LENGTH,
@@ -13,7 +12,7 @@ interface ReviewCommentsProps {
   onAddComment: (comment: LocalComment) => void
 }
 
-export function ReviewComments({ comments, onAddComment }: ReviewCommentsProps) {
+export default function ReviewComments({ comments, onAddComment }: ReviewCommentsProps) {
   const [content, setContent] = useState('')
   const [isTouched, setIsTouched] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -40,50 +39,53 @@ export function ReviewComments({ comments, onAddComment }: ReviewCommentsProps) 
 
   return (
     <section className={styles.comments} aria-label="Комментарии к рецензии">
-      <h4 className={styles.commentsTitle}>
-        Комментарии{comments.length > 0 && ` (${comments.length})`}
-      </h4>
       {comments.length > 0 && (
         <ul className={styles.commentList} aria-live="polite">
           {comments.map((comment) => (
             <li className={styles.comment} key={comment.id}>
-              <div className={styles.commentMeta}>
-                <span className={styles.commentAuthor}>Вы</span>
-                <time dateTime={comment.createdAt}>
+              <span className={styles.commentAvatar} aria-hidden="true">В</span>
+              <div className={styles.commentDetails}>
+                <p className={styles.commentAuthor}>Вы</p>
+                <p className={styles.commentText}>{comment.content}</p>
+                <time className={styles.commentDate} dateTime={comment.createdAt}>
                   {getReviewDate(comment.createdAt)}
                 </time>
               </div>
-              <p className={styles.commentText}>{comment.content}</p>
             </li>
           ))}
         </ul>
       )}
       <form className={styles.commentForm} onSubmit={handleSubmit} noValidate>
-        <label htmlFor={fieldId}>Ваш комментарий</label>
-        <textarea
-          id={fieldId}
-          className={styles.commentInput}
-          ref={textareaRef}
-          value={content}
-          rows={3}
-          placeholder="Написать комментарий…"
-          aria-invalid={visibleError ? true : undefined}
-          aria-describedby={`${hintId}${visibleError ? ` ${errorId}` : ''}`}
-          onChange={(event) => setContent(event.currentTarget.value)}
-          onBlur={() => setIsTouched(true)}
-        />
-        <div className={styles.commentHint} id={hintId}>
-          <span>Обычный текст, до {MAX_COMMENT_LENGTH} символов</span>
-          <span>{content.length}/{MAX_COMMENT_LENGTH}</span>
+        <span className={styles.commentAvatar} aria-hidden="true">В</span>
+        <div className={styles.commentDetails}>
+          <label className={styles.visuallyHidden} htmlFor={fieldId}>Ваш комментарий</label>
+          <textarea
+            id={fieldId}
+            className={visibleError
+              ? `${styles.commentInput} ${styles['commentInput--invalid']}`
+              : styles.commentInput}
+            ref={textareaRef}
+            value={content}
+            rows={2}
+            placeholder="Написать комментарий…"
+            aria-invalid={visibleError ? true : undefined}
+            aria-describedby={`${hintId}${visibleError ? ` ${errorId}` : ''}`}
+            onChange={(event) => setContent(event.currentTarget.value)}
+            onBlur={() => setIsTouched(true)}
+          />
+          <div className={styles.commentHint} id={hintId}>
+            <span>До {MAX_COMMENT_LENGTH} символов</span>
+            <span>{content.length}/{MAX_COMMENT_LENGTH}</span>
+          </div>
+          {visibleError && (
+            <p className={styles.fieldError} id={errorId} role="alert">
+              {visibleError}
+            </p>
+          )}
+          <button type="submit" className={styles.publishButton} disabled={Boolean(validationError)}>
+            Опубликовать
+          </button>
         </div>
-        {visibleError && (
-          <p className={styles.fieldError} id={errorId} role="alert">
-            {visibleError}
-          </p>
-        )}
-        <Button type="submit" className={styles.publishButton} disabled={Boolean(validationError)}>
-          Опубликовать
-        </Button>
       </form>
     </section>
   )

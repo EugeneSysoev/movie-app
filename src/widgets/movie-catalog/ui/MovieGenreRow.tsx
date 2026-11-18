@@ -1,64 +1,68 @@
 import { MovieCard } from '@/entities/movie'
-import { useDiscoverMovie } from '@/shared/api/generated/endpoints'
-import type { GenreMovieList200GenresItem } from '@/shared/api/generated/model/genreMovieList200GenresItem'
-import { CATALOG_DISCOVER_PARAMS } from '../config/catalog'
-import { getCatalogMovies } from '../model/movies'
-import { CatalogFeedback } from './CatalogFeedback'
+import { Feedback } from '@/shared/ui/feedback'
 import { Slider } from '@/shared/ui/slider'
 import { getCatalogA11yConfig } from '../config/catalog'
 import styles from './MovieGenreRow.module.css'
 import sliderStyles from './MovieSlider.module.css'
 import { Link } from 'react-router'
+import { useState } from 'react'
+import type { CatalogMovie } from '../model/movies'
 
-interface MovieGenreRowProps {
+export interface MovieGenreRowProps {
   genreId: number
   title: string
-  genres: GenreMovieList200GenresItem[]
+  movies: CatalogMovie[]
+  isError: boolean
+  isFetching: boolean
+  onRetry: () => void
 }
 
-export function MovieGenreRow({ genreId, title, genres }: MovieGenreRowProps) {
-  const { data, isPending, isError, isFetching, refetch } = useDiscoverMovie({
-    ...CATALOG_DISCOVER_PARAMS,
-    with_genres: String(genreId),
-  })
-  const movies = getCatalogMovies(data?.results, genres)
+export function MovieGenreRow(props: MovieGenreRowProps) {
+  const { genreId, title, movies, isError, isFetching, onRetry } = props
+
+  const [allowedMovieIds, setAllowedMovieIds] = useState<number[]>([])
+
   const headingId = `movie-genre-${genreId}`
 
+  const handleIndexChange = (index: number) => {
+    const circularMovies = [...movies, ...movies]
+    const visibleMovies = circularMovies.slice(index, index + 4)
+    const visibleMovieIds = visibleMovies.map((movie) => movie.id)
+
+    setAllowedMovieIds((previousIds) => {
+      const newIds = visibleMovieIds.filter((id) => !previousIds.includes(id))
+      if (newIds.length === 0) return previousIds
+      return [...previousIds, ...newIds]
+    })
+  }
+
   return (
-    <section aria-labelledby={headingId} aria-busy={isPending}>
+    <section aria-labelledby={headingId} aria-busy={isFetching}>
       <h3 className={styles.title} id={headingId}>
         {title}
       </h3>
 
-      {isPending && <CatalogFeedback message="Загружаем фильмы…" />}
       {isError && (
-        <CatalogFeedback
-          message="Не удалось загрузить фильмы."
-          onRetry={() => void refetch()}
-          isFetching={isFetching}
-        />
+        <Feedback onRetry={onRetry} isFetching={isFetching} />
       )}
-      {!isPending && !isError && movies.length === 0 && (
-        <CatalogFeedback
-          message="В этом разделе пока нет фильмов."
-          onRetry={() => void refetch()}
-          isFetching={isFetching}
-        />
+      {!isError && movies.length === 0 && (
+        <Feedback message="В этом разделе пока нет фильмов." />
       )}
 
       {movies.length > 0 && (
         <Slider
-          a11yConfig={getCatalogA11yConfig(title)}
-          slidesPerView={4}
-          spaceBetween={20}
           classNames={{
             slider: sliderStyles.slider,
             slides: sliderStyles.slides,
             slide: sliderStyles.slide,
-            nextButton: sliderStyles.nextButton,
+            nextButton: sliderStyles.nextButton
           }}
+          a11yConfig={getCatalogA11yConfig(title)}
+          slidesPerView={4}
+          spaceBetween={20}
+          onIndexChange={handleIndexChange}
         >
-          {movies.map((movie) => (
+          {movies.map((movie, index) => (
             <Link
               className={styles.movieLink}
               key={movie.id}
@@ -71,6 +75,7 @@ export function MovieGenreRow({ genreId, title, genres }: MovieGenreRowProps) {
                 media="movie"
                 rating={movie.rating}
                 genres={movie.genres}
+                canLoad={index < 4 || allowedMovieIds.includes(movie.id)}
               />
             </Link>
           ))}

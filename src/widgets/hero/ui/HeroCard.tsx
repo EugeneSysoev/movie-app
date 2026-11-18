@@ -10,7 +10,7 @@ interface HeroCardProps {
 
 export function HeroCard({ slide, priority }: HeroCardProps) {
   return (
-    <div className={styles.card}>
+    <>
       <HeroPoster src={slide.image} priority={priority} />
 
       <p className={styles.slideTitle}>{slide.title}</p>
@@ -19,6 +19,6 @@ export function HeroCard({ slide, priority }: HeroCardProps) {
         <span className={styles.premiereLabel}>Премьера</span>
         <span>{formatReleaseDate(slide.releaseDate)}</span>
       </div>
-    </div>
+    </>
   )
 }

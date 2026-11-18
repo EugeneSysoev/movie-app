@@ -12,6 +12,11 @@ export function getReviewAuthor(review: MovieReviews200ResultsItem): string {
   )
 }
 
+export function getReviewRating(review: MovieReviews200ResultsItem): number | undefined {
+  const rating = review.author_details?.rating
+  if (typeof rating === 'number' && rating >= 0 && rating <= 10) return rating
+}
+
 export function getReviewDate(createdAt?: string): string | undefined {
   if (!createdAt) return undefined
 

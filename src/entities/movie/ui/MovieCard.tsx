@@ -1,4 +1,5 @@
 import styles from './MovieCard.module.css'
+
 import { MovieImage } from './MovieImage'
 
 interface MovieCardProps {
@@ -7,10 +8,11 @@ interface MovieCardProps {
   media: 'movie' | 'tv'
   rating?: number
   genres?: string[]
+  canLoad?: boolean
 }
 
 export function MovieCard(props: MovieCardProps) {
-  const { title, imagePath, rating, genres = [], media } = props
+  const { title, imagePath, rating, genres = [], media, canLoad = true } = props
 
   const currentMedia = media === 'movie' ? 'Фильм' : 'Сериал'
   const visibleGenres = genres.slice(0, 2).map((genre, index) => {
@@ -25,6 +27,7 @@ export function MovieCard(props: MovieCardProps) {
         size="w780"
         className={styles.poster}
         loading="lazy"
+        canLoad={canLoad}
       />
 
       <div className={styles.content}>

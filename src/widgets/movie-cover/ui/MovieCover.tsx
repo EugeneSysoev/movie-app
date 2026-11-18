@@ -59,26 +59,37 @@ export const MovieCover = (props: MovieCoverProps) => {
           <div className={styles.buttonsRow}>
             <Button
               className={styles.button}
-              title="Просмотр пока что недоступен"
+              title="Просмотр фильма пока недоступен"
               type="button"
               disabled
             >
               Смотреть фильм
-              <img src={PlayIcon} alt="" width={18} height={18} />
+              <img src={PlayIcon} alt="" width={14} height={16} />
             </Button>
 
-            <WatchTrailer key={movieId} movieId={movieId} movieTitle={title} />
+            <WatchTrailer
+              key={movieId}
+              movieId={movieId}
+              movieTitle={title}
+              className={styles.trailerButton}
+            />
 
-            <IconButton type="button" disabled aria-label="Добавить в плейлист">
-              <img src={PlusIcon} alt="" width={60} height={55} />
+            <IconButton
+              className={styles.iconAction}
+              disabled
+              aria-label="Добавить в плейлист"
+              title="Добавление в плейлист пока недоступно"
+            >
+              <img src={PlusIcon} alt="" />
             </IconButton>
 
             <IconButton
-              type="button"
+              className={`${styles.iconAction} ${styles.favoriteAction}`}
               disabled
               aria-label="Добавить в избранное"
+              title="Избранное пока недоступно"
             >
-              <img src={FavoritesIcon} alt="" width={57} height={55} />
+              <img src={FavoritesIcon} alt="" />
             </IconButton>
           </div>
         </div>

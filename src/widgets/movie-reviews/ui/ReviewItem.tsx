@@ -1,14 +1,24 @@
 import type { MovieReviews200ResultsItem } from '@/shared/api/generated/model'
-import { useState } from 'react'
+import { lazy, Suspense, useId, useState } from 'react'
+import { Loader } from '@/shared/ui/loader'
 import {
   getReviewAuthor,
   getReviewAvatarUrl,
-  getReviewDate
+  getReviewDate,
+  getReviewRating
 } from '../model/reviewDetails'
 import { ReviewText } from './ReviewText'
-import { ReviewComments } from './ReviewComments'
+import commentIcon from '../assets/comment.svg'
+import likeIcon from '../assets/like.svg'
+import dislikeIcon from '../assets/dislike.svg'
 import type { LocalComment, ReviewFeedback } from '../model/reviewFeedback'
 import styles from './MovieReviews.module.css'
+
+const ReviewComments = lazy(() => import('./ReviewComments'))
+const reactions = [
+  { value: 'like', label: 'Нравится', icon: likeIcon },
+  { value: 'dislike', label: 'Не нравится', icon: dislikeIcon }
+] as const
 
 interface ReviewItemProps {
   review: MovieReviews200ResultsItem
@@ -17,19 +27,18 @@ interface ReviewItemProps {
   onAddComment: (comment: LocalComment) => void
 }
 
-export function ReviewItem({
-  review,
-  feedback,
-  onReact,
-  onAddComment
-}: ReviewItemProps) {
+export function ReviewItem(props: ReviewItemProps) {
+  const { review, feedback, onReact, onAddComment } = props
   const [failedAvatarUrl, setFailedAvatarUrl] = useState<string | null>(null)
+  const [commentsState, setCommentsState] = useState<'unopened' | 'open' | 'closed'>('unopened')
+  const commentsId = useId()
+  const commentsOpen = commentsState === 'open'
   const author = getReviewAuthor(review)
   const date = getReviewDate(review.created_at)
   const avatarUrl = getReviewAvatarUrl(review.author_details?.avatar_path)
 
   return (
-    <article className={styles.review}>
+    <article>
       <header className={styles.reviewHeader}>
         {avatarUrl && avatarUrl !== failedAvatarUrl ? (
           <img
@@ -47,7 +56,7 @@ export function ReviewItem({
           </span>
         )}
         <div className={styles.authorDetails}>
-          <h3 className={styles.author}>{author}</h3>
+          <p className={styles.author}>{author}</p>
           {date ? (
             <time className={styles.date} dateTime={review.created_at}>
               {date}
@@ -57,26 +66,47 @@ export function ReviewItem({
           )}
         </div>
       </header>
-      <ReviewText content={review.content} />
-      <div className={styles.reactions} role="group" aria-label="Ваша реакция на рецензию">
-        <button
-          className={styles.reactionButton}
-          type="button"
-          aria-pressed={feedback.reaction === 'like'}
-          onClick={() => onReact('like')}
-        >
-          Нравится
-        </button>
-        <button
-          className={styles.reactionButton}
-          type="button"
-          aria-pressed={feedback.reaction === 'dislike'}
-          onClick={() => onReact('dislike')}
-        >
-          Не нравится
-        </button>
+      <ReviewText content={review.content} rating={getReviewRating(review)} />
+      <div className={styles.reviewFooter}>
+        <div className={styles.reactions} role="group" aria-label="Комментарии и реакции">
+          <button
+            className={styles.reactionButton}
+            type="button"
+            aria-label={`Комментарии: ${feedback.comments.length}`}
+            title={commentsOpen ? 'Свернуть комментарии' : 'Открыть комментарии'}
+            aria-expanded={commentsOpen}
+            aria-controls={commentsId}
+            onClick={() => setCommentsState(commentsOpen ? 'closed' : 'open')}
+          >
+            <img src={commentIcon} alt="" />
+            <span>{feedback.comments.length}</span>
+          </button>
+          {reactions.map(({ value, label, icon }) => {
+            const selected = feedback.reaction === value
+            return (
+              <button
+                key={value}
+                className={styles.reactionButton}
+                type="button"
+                aria-label={label}
+                title={label}
+                aria-pressed={selected}
+                onClick={() => onReact(value)}
+              >
+                <img src={icon} alt="" />
+                {selected && <span>1</span>}
+              </button>
+            )
+          })}
+        </div>
       </div>
-      <ReviewComments comments={feedback.comments} onAddComment={onAddComment} />
+      <div id={commentsId} hidden={!commentsOpen} className={styles.thread}>
+        {commentsState !== 'unopened' && (
+          <Suspense fallback={<Loader className={styles.commentsLoader} label="Загрузка формы комментариев" />}>
+            <ReviewComments comments={feedback.comments} onAddComment={onAddComment} />
+          </Suspense>
+        )}
+      </div>
     </article>
   )
 }

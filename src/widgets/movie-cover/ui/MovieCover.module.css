@@ -1,5 +1,5 @@
 .title {
-  font-size: 72px;
+  font-size: clamp(40px, 5.5vw, 72px);
   font-weight: 800;
   line-height: 1;
   letter-spacing: 0.36px;
@@ -47,10 +47,6 @@
   width: 100%;
   height: 100%;
 }
-img.image {
-  display: block;
-  object-fit: cover;
-}
 
 .content {
   position: relative;
@@ -70,6 +66,8 @@ img.image {
 
 .buttonsRow {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 15px;
   margin-top: 35px;
   margin-bottom: 44px;
@@ -80,5 +78,45 @@ img.image {
 }
 
 .button {
-  gap: 10px
+  width: 200px;
+  gap: 10px;
+}
+
+.buttonsRow .trailerButton {
+  width: 107px;
+  padding-inline: 0;
+}
+
+.buttonsRow .iconAction {
+  width: 60px;
+  height: 55px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px var(--color-text);
+}
+
+.buttonsRow .favoriteAction {
+  width: 57px;
+}
+
+@media (max-width: 800px) {
+  .cover {
+    min-height: auto;
+  }
+
+  .content {
+    padding-block: clamp(120px, 32vw, 256px) 64px;
+  }
+
+  .backdrop {
+    height: calc(100% + var(--header-height));
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 160px), transparent);
+  }
+
+  .cover::after {
+    content: none;
+  }
+
+  .buttonsRow {
+    margin-bottom: 0;
+  }
 }

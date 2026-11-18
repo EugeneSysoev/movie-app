@@ -10,19 +10,18 @@ export function getMovieYear(releaseDate?: string): string | undefined {
 
 export function getMovieGenres(genres?: { name?: string }[]): string[] {
   return (
-    genres
-      ?.map((genre) => genre.name)
-      .filter((genre) => genre !== undefined) ?? []
+    genres?.map((genre) => genre.name).filter((genre) => genre !== undefined) ??
+    []
   )
 }
 
 export function getMovieCountries(
   countries: ProductionCountry[] = [],
-  dictionary: CountryTranslation[] = [],
+  dictionary: CountryTranslation[] = []
 ): string[] {
   return countries.map((country) => {
     const translation = dictionary.find(
-      (item) => item.iso_3166_1 === country.iso_3166_1,
+      (item) => item.iso_3166_1 === country.iso_3166_1
     )
 
     return translation?.native_name ?? country.name ?? ''

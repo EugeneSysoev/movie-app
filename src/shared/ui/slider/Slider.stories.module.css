@@ -1,0 +1,39 @@
+.slider {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 40px;
+  align-items: center;
+  gap: 16px;
+  width: min(720px, 100%);
+}
+
+.slider .slides {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  min-width: 0;
+}
+
+.slide {
+  height: auto;
+}
+
+.nextButton {
+  grid-column: 2;
+  grid-row: 1;
+  width: 40px;
+  height: 40px;
+}
+
+.nextButton img {
+  width: 32px;
+  transform: rotate(180deg);
+}
+
+.card {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 10px;
+  background: rgb(255 255 255 / 5%);
+}

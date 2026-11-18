@@ -1,75 +1,33 @@
-import { Button } from '@/shared/ui/button/Button'
-import { useEffect, useRef } from 'react'
-import { type SyntheticEvent, type RefObject } from 'react'
+import { lazy, Suspense, type RefObject } from 'react'
+import { Dialog } from '@/shared/ui/dialog'
+import { Loader } from '@/shared/ui/loader'
 import styles from './TrailerDialog.module.css'
 
+const TrailerContent = lazy(() => import('./TrailerContent'))
+
 interface TrailerDialogProps {
-  trailerKey: string
+  movieId: number
   movieTitle: string
-  onClose: () => void
   returnFocusRef: RefObject<HTMLButtonElement | null>
+  onClose: () => void
 }
 
 export function TrailerDialog(props: TrailerDialogProps) {
-  const { trailerKey, movieTitle, onClose, returnFocusRef } = props
-
-  const dialogRef = useRef<HTMLDialogElement>(null)
-
-  useEffect(() => {
-    const dialog = dialogRef.current
-    if (!dialog) return
-    const returnFocusButton = returnFocusRef.current
-
-    dialog.showModal()
-
-    return () => {
-      dialog.close()
-      returnFocusButton?.focus()
-    }
-  }, [returnFocusRef])
-
-  function handleCancel(event: SyntheticEvent<HTMLDialogElement>) {
-    event.preventDefault()
-    dialogRef.current?.close()
-    onClose()
-  }
-
-  function handleClickCancel(event: SyntheticEvent<HTMLElement>) {
-    if (event.target === event.currentTarget) {
-      dialogRef.current?.close()
-      onClose()
-    }
-  }
+  const { movieId, movieTitle, returnFocusRef, onClose } = props
 
   return (
-    <dialog
+    <Dialog
       className={styles.dialog}
-      ref={dialogRef}
-      onClick={handleClickCancel}
-      onCancel={handleCancel}
-      aria-label="Просмотр трейлера фильма"
+      label="Просмотр трейлера"
+      closeLabel="Закрыть трейлер"
+      returnFocusRef={returnFocusRef}
+      onClose={onClose}
     >
       <div className={styles.content}>
-        <Button className={styles.button} onClick={onClose}>
-          Закрыть
-        </Button>
-
-        <iframe
-          className={styles.player}
-          title={movieTitle}
-          src={`https://www.youtube.com/embed/${trailerKey}`}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-        <a
-          className={styles.youtubeLink}
-          href={`https://www.youtube.com/watch?v=${encodeURIComponent(trailerKey)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Смотреть на YouTube
-        </a>
+        <Suspense fallback={<Loader label="Загрузка трейлера" className={styles.loading} />}>
+          <TrailerContent movieId={movieId} movieTitle={movieTitle} />
+        </Suspense>
       </div>
-    </dialog>
+    </Dialog>
   )
 }

@@ -1,1 +1,1 @@
-export { TMDB_IMAGE_URLS, TMDB_LANGUAGE } from './tmdb'
+export { TMDB_IMAGE_URLS, TMDB_LANGUAGE, TMDB_LANGUAGE_PARAMS } from './tmdb'

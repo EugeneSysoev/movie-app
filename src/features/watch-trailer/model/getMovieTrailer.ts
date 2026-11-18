@@ -1,4 +1,4 @@
-import { type MovieVideos200ResultsItem } from '@/shared/api/generated/model'
+import type { MovieVideos200ResultsItem } from '@/shared/api/generated/model'
 
 export function getMovieTrailer(
   videos: MovieVideos200ResultsItem[] = []

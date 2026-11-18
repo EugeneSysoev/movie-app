@@ -2,9 +2,16 @@
   min-width: 0;
 }
 
-.input {
+.form .input {
   flex: 1;
   min-width: 0;
+  min-height: 52px;
+  font-size: 18px;
+  caret-color: var(--color-text);
+}
+
+.form .input:focus-visible {
+  outline: none;
 }
 
 .visuallyHidden {
@@ -23,4 +30,16 @@
   display: flex;
   align-items: center;
   gap: 15px;
+}
+
+.controls > img {
+  opacity: 0.65;
+}
+
+.controls:focus-within > img {
+  opacity: 1;
+}
+
+.closeIcon {
+  opacity: 0.5;
 }
